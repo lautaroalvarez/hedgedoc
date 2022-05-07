@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,34 +15,34 @@ import { decoding } from 'lib0';
 import WebSocket from 'ws';
 
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { Note } from '../../notes/note.entity';
 import { NotesService } from '../../notes/notes.service';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { SessionService } from '../../session/session.service';
 import { UsersService } from '../../users/users.service';
 import { HEDGEDOC_SESSION } from '../../utils/session';
-import { RealtimeNote } from './realtime-note';
-import { getNoteFromRealtimePath } from './utils/get-note-from-realtime-path';
-import { MessageType } from './yjs-messages';
+import { RealtimeNote } from '../realtime-note/realtime-note';
+import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
+import { MessageType } from '../realtime-note/yjs-messages';
+import { extractNoteIdFromRealtimePath } from './extract-note-id-from-realtime-path';
 
 /**
  * Gateway implementing the realtime logic required for realtime note editing.
  */
 @WebSocketGateway({ path: '/realtime/' })
-export class RealtimeEditorGateway
+export class RealtimeWebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   private connectionToRealtimeNote = new Map<WebSocket, RealtimeNote>();
-  private noteIdToRealtimeNote = new Map<string, RealtimeNote>();
 
   constructor(
     private readonly logger: ConsoleLoggerService,
     private noteService: NotesService,
+    private realtimeNoteService: RealtimeNoteService,
     private userService: UsersService,
     private permissionsService: PermissionsService,
     private sessionService: SessionService,
   ) {
-    this.logger.setContext(RealtimeEditorGateway.name);
+    this.logger.setContext(RealtimeWebsocketGateway.name);
   }
 
   /**
@@ -58,7 +58,7 @@ export class RealtimeEditorGateway
     }
     realtimeNote.removeClient(client, () => {
       this.connectionToRealtimeNote.delete(client);
-      this.noteIdToRealtimeNote.delete(realtimeNote.getNoteId());
+      this.realtimeNoteService.deleteNote(realtimeNote.getNoteId());
     });
   }
 
@@ -120,9 +120,8 @@ export class RealtimeEditorGateway
       );
 
       const user = await this.userService.getUserByUsername(username);
-      const note = await getNoteFromRealtimePath(
-        this.noteService,
-        req.url ?? '',
+      const note = await this.noteService.getNoteByIdOrAlias(
+        extractNoteIdFromRealtimePath(req.url ?? ''),
       );
 
       if (!(await this.permissionsService.mayRead(user, note))) {
@@ -135,7 +134,11 @@ export class RealtimeEditorGateway
         return;
       }
 
-      const realtimeNote = await this.getOrCreateRealtimeNote(note);
+      const realtimeNote =
+        await this.realtimeNoteService.getOrCreateRealtimeNote(
+          note.id,
+          async () => (await this.noteService.getLatestRevision(note)).content,
+        );
       this.connectionToRealtimeNote.set(client, realtimeNote);
 
       if (client.readyState !== WebSocket.OPEN) {
@@ -161,18 +164,6 @@ export class RealtimeEditorGateway
         'handleConnection',
       );
       client.close();
-    }
-  }
-
-  private async getOrCreateRealtimeNote(note: Note): Promise<RealtimeNote> {
-    const realtimeNote = this.noteIdToRealtimeNote.get(note.id);
-    if (!realtimeNote) {
-      const initialContent = await this.noteService.getNoteContent(note);
-      const realtimeNote = new RealtimeNote(note.id, initialContent);
-      this.noteIdToRealtimeNote.set(note.id, realtimeNote);
-      return realtimeNote;
-    } else {
-      return realtimeNote;
     }
   }
 

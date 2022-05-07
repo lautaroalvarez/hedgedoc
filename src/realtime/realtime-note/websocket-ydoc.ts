@@ -11,6 +11,8 @@ import { WebsocketConnection } from './websocket-connection';
 import { decodeSyncMessage, encodeSyncMessage } from './yjs-messages';
 
 export class WebsocketDoc extends Doc {
+  private static readonly channelName = 'codemirror';
+
   constructor(private realtimeNote: RealtimeNote, initialContent: string) {
     super();
     this.initializeContent(initialContent);
@@ -18,7 +20,7 @@ export class WebsocketDoc extends Doc {
   }
 
   private initializeContent(initialContent: string): void {
-    this.getText('codemirror').insert(0, initialContent);
+    this.getText(WebsocketDoc.channelName).insert(0, initialContent);
   }
 
   private processYDocUpdate(
@@ -41,5 +43,9 @@ export class WebsocketDoc extends Doc {
     if (response) {
       client.send(response);
     }
+  }
+
+  public getCurrentContent(): string {
+    return this.getText(WebsocketDoc.channelName).toString();
   }
 }

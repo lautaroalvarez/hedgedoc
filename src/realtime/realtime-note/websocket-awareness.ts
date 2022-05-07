@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { decoding } from 'lib0';
 import { Decoder } from 'lib0/decoding';
-import { Awareness, removeAwarenessStates } from 'y-protocols/awareness';
+import { Awareness } from 'y-protocols/awareness';
 
 import { RealtimeNote } from './realtime-note';
 import { WebsocketConnection } from './websocket-connection';

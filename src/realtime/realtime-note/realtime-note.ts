@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '@nestjs/common';
-import { websocket } from 'lib0';
 import { Decoder } from 'lib0/decoding';
 import WebSocket from 'ws';
 import { Awareness } from 'y-protocols/awareness';
@@ -88,5 +87,9 @@ export class RealtimeNote {
 
   public getAwareness(): Awareness {
     return this.websocketAwareness;
+  }
+
+  public getNoteContent(): string {
+    return this.websocketDoc.getCurrentContent();
   }
 }

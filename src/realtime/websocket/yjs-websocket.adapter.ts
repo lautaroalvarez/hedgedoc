@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,7 @@ import { MessageMappingProperties } from '@nestjs/websockets';
 import { decoding } from 'lib0';
 import WebSocket, { Server, ServerOptions } from 'ws';
 
-import { MessageType } from './yjs-messages';
+import { MessageType } from '../realtime-note/yjs-messages';
 
 export class YjsWebsocketAdapter extends WsAdapter {
   protected readonly logger = new Logger(YjsWebsocketAdapter.name);

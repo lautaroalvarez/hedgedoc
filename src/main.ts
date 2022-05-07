@@ -16,12 +16,12 @@ import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
-import { YjsWebsocketAdapter } from './realtime/editor/yjs-websocket.adapter';
 import { SessionService } from './session/session.service';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
+import { YjsWebsocketAdapter } from "./realtime/websocket/yjs-websocket.adapter";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
