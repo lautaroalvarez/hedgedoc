@@ -11,7 +11,7 @@ import { Doc } from 'yjs';
 
 import { WebsocketAwareness } from './websocket-awareness';
 import { WebsocketConnection } from './websocket-connection';
-import { WebsocketDoc } from './websocket-ydoc';
+import { WebsocketDoc } from './websocket-doc';
 
 export class RealtimeNote {
   protected readonly logger = new Logger(RealtimeNote.name);
