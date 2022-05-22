@@ -6,9 +6,9 @@
 import { Decoder } from 'lib0/decoding';
 import { Doc } from 'yjs';
 
+import { decodeSyncMessage, encodeSyncMessage } from './encode-utils';
 import { RealtimeNote } from './realtime-note';
 import { WebsocketConnection } from './websocket-connection';
-import { decodeSyncMessage, encodeSyncMessage } from './yjs-messages';
 
 export class WebsocketDoc extends Doc {
   private static readonly channelName = 'codemirror';

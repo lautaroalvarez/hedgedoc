@@ -14,13 +14,8 @@ import {
 import { readSyncMessage, writeSyncStep1, writeUpdate } from 'y-protocols/sync';
 import { Doc } from 'yjs';
 
+import { MessageType } from '../message-type.enum';
 import { WebsocketConnection } from './websocket-connection';
-
-export enum MessageType {
-  SYNC = 0,
-  AWARENESS = 1,
-  HEDGEDOC = 100,
-}
 
 export function encodeAwarenessMessage(
   awareness: Awareness,

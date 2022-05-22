@@ -6,9 +6,9 @@
 import { Decoder } from 'lib0/decoding';
 import { Awareness } from 'y-protocols/awareness';
 
+import { decodeAwarenessMessage, encodeAwarenessMessage } from './encode-utils';
 import { RealtimeNote } from './realtime-note';
 import { WebsocketConnection } from './websocket-connection';
-import { decodeAwarenessMessage, encodeAwarenessMessage } from './yjs-messages';
 
 interface ClientIdUpdate {
   added: number[];
