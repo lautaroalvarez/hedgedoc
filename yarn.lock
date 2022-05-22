@@ -5305,7 +5305,7 @@ __metadata:
     typeorm: 0.2.45
     typescript: 4.6.4
     y-protocols: 1.0.5
-    yjs: 13.5.34
+    yjs: 13.5.38
   languageName: unknown
   linkType: soft
 
@@ -10045,12 +10045,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.34":
-  version: 13.5.34
-  resolution: "yjs@npm:13.5.34"
+"yjs@npm:13.5.38":
+  version: 13.5.38
+  resolution: "yjs@npm:13.5.38"
   dependencies:
     lib0: ^0.2.49
-  checksum: 1d52c45f53d42db183162e5e576bc331122af80c6a4661d096de91469c6bf8611860f0dfaa2f5dce671a10c7a04ea49f9431188a1a018d7fa4271a02f1a4b6fa
+  checksum: 48be9cfe514b5f9f7c64cddf38f7fd59142fe56553200ba88543c6c2c5df6a6be6876440d40f8b1a0f34e5a92ba8efe6b8da5da657278393ceb5171c4fc3a4e0
   languageName: node
   linkType: hard
 

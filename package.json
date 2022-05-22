@@ -70,7 +70,7 @@
     "swagger-ui-express": "4.4.0",
     "typeorm": "0.2.45",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.34"
+    "yjs": "13.5.38"
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.6",
