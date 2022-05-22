@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 
 
 
-import { DatabaseDialect } from '../config/database-dialect.enum';
+import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, { DatabaseConfig } from '../config/database.config';
 import { Session } from '../users/session.entity';
 
@@ -32,7 +32,7 @@ export class SessionService {
   ) {
     this.typeormStore = new TypeormStore({
       cleanupLimit: 2,
-      limitSubquery: dbConfig.type !== DatabaseDialect.MARIADB,
+      limitSubquery: dbConfig.type !== DatabaseType.MARIADB,
     }).connect(sessionRepository);
   }
 
