@@ -29,7 +29,7 @@ import { extractNoteIdFromRealtimePath } from './extract-note-id-from-realtime-p
  * Gateway implementing the realtime logic required for realtime note editing.
  */
 @WebSocketGateway({ path: '/realtime/' })
-export class RealtimeWebsocketGateway
+export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   private connectionToRealtimeNote = new Map<WebSocket, RealtimeNote>();
@@ -42,7 +42,7 @@ export class RealtimeWebsocketGateway
     private permissionsService: PermissionsService,
     private sessionService: SessionService,
   ) {
-    this.logger.setContext(RealtimeWebsocketGateway.name);
+    this.logger.setContext(WebsocketGateway.name);
   }
 
   /**

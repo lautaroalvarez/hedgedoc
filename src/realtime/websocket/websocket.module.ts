@@ -11,7 +11,7 @@ import { PermissionsModule } from '../../permissions/permissions.module';
 import { SessionModule } from '../../session/session.module';
 import { UsersModule } from '../../users/users.module';
 import { RealtimeNoteModule } from '../realtime-note/realtime-note.module';
-import { RealtimeWebsocketGateway } from './realtime-websocket.gateway';
+import { WebsocketGateway } from './websocket.gateway';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { RealtimeWebsocketGateway } from './realtime-websocket.gateway';
     PermissionsModule,
     SessionModule,
   ],
-  exports: [RealtimeWebsocketGateway],
-  providers: [RealtimeWebsocketGateway],
+  exports: [WebsocketGateway],
+  providers: [WebsocketGateway],
 })
-export class RealtimeWebsocketModule {}
+export class WebsocketModule {}
