@@ -11,8 +11,8 @@ import WebSocket, { Server, ServerOptions } from 'ws';
 
 import { MessageType } from '../realtime-note/yjs-messages';
 
-export class YjsWebsocketAdapter extends WsAdapter {
-  protected readonly logger = new Logger(YjsWebsocketAdapter.name);
+export class BinaryWebsocketAdapter extends WsAdapter {
+  protected readonly logger = new Logger(BinaryWebsocketAdapter.name);
 
   constructor(private app: INestApplication) {
     super(app);

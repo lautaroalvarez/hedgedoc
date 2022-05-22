@@ -16,12 +16,12 @@ import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
+import { BinaryWebsocketAdapter } from './realtime/websocket/binary-websocket.adapter';
 import { SessionService } from './session/session.service';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
-import { YjsWebsocketAdapter } from "./realtime/websocket/yjs-websocket.adapter";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -37,7 +37,7 @@ async function bootstrap(): Promise<void> {
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
 
-  app.useWebSocketAdapter(new YjsWebsocketAdapter(app));
+  app.useWebSocketAdapter(new BinaryWebsocketAdapter(app));
 
   if (!appConfig || !databaseConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
