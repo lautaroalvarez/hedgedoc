@@ -43,7 +43,10 @@ export class RealtimeNote {
     if (!connection) {
       throw new Error('Received AWARENESS for unknown connection');
     }
-    this.websocketAwareness.processAwarenessMessage(connection, decoder);
+    this.websocketAwareness.processIncomingAwarenessMessage(
+      connection,
+      decoder,
+    );
   }
 
   /**
