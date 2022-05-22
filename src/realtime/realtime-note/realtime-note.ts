@@ -35,7 +35,7 @@ export class RealtimeNote {
     if (!connection) {
       throw new Error('Received SYNC for unknown connection');
     }
-    this.websocketDoc.processSyncMessage(connection, decoder);
+    this.websocketDoc.processIncomingSyncMessage(connection, decoder);
   }
 
   public processAwarenessMessage(client: WebSocket, decoder: Decoder): void {
