@@ -5,6 +5,7 @@
  */
 import WebSocket from 'ws';
 
+import { User } from '../../users/user.entity';
 import {
   encodeAwarenessMessage,
   encodeInitialSyncMessage,
@@ -24,10 +25,12 @@ export class WebsocketConnection {
    * Besides sending the initial data to the client, a ping-pong connection test is set up.
    *
    * @param websocket The client's raw websocket.
+   * @param user The user of the client
    * @param realtimeNote The {@link RealtimeNote} that the client connected to.
    */
   constructor(
     private websocket: WebSocket,
+    private user: User,
     private realtimeNote: RealtimeNote,
   ) {
     this.setupPing();

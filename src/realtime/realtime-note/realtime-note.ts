@@ -9,6 +9,7 @@ import WebSocket from 'ws';
 import { Awareness } from 'y-protocols/awareness';
 import { Doc } from 'yjs';
 
+import { User } from '../../users/user.entity';
 import { WebsocketAwareness } from './websocket-awareness';
 import { WebsocketConnection } from './websocket-connection';
 import { WebsocketDoc } from './websocket-doc';
@@ -30,9 +31,17 @@ export class RealtimeNote {
     this.logger.log(`New realtime note for ${noteId} created.`);
   }
 
-  public connectClient(client: WebSocket): void {
+  /**
+   * Connects a new client to the note.
+   *
+   * For this purpose a {@link WebsocketConnection} is created and added to the client map.
+   *
+   * @param client the websocket connection to the client
+   * @param user the user who authorized this client
+   */
+  public connectClient(client: WebSocket, user: User): void {
     this.logger.log(`New client connected`);
-    this.clients.set(client, new WebsocketConnection(client, this));
+    this.clients.set(client, new WebsocketConnection(client, user, this));
   }
 
   /**

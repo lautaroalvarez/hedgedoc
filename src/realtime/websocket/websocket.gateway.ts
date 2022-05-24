@@ -151,7 +151,7 @@ export class WebsocketGateway
         return;
       }
 
-      realtimeNote.connectClient(client);
+      realtimeNote.connectClient(client, user);
       this.logger.debug(
         `Connection to note '${note.id}' (${note.publicId}) by user '${user.username}'`,
       );
